@@ -1,13 +1,16 @@
 import nodemailer from "nodemailer";
 
-export async function POST(req, res) {
+export async function POST(req) {
   try {
     //parse incoming JSON data
     const { name, email, message } = await req.json();
 
     //basic validation
     if (!name || !email || !message) {
-      return res.status(400).json({ message: "All fields are required" });
+      return new Response(JSON.stringify({ error: "Missing fields" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
     //create a reusable transporter using SMTP
@@ -36,9 +39,15 @@ export async function POST(req, res) {
 
     //send email
     await transporter.sendMail(mailOptions);
-    return res.status(200).json({ message: "Message sent successfully" });
+    return new Response(JSON.stringify({ success: true }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: "Internal server error" });
+    return new Response(JSON.stringify({ error: "Internal server error" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }

@@ -1,3 +1,9 @@
+import ContactPage from "./contact/page";
+
 export default function Home() {
-  return <div>I am learning how to use nodemailer</div>;
+  return (
+    <div>
+      <ContactPage />
+    </div>
+  );
 }
