@@ -45,6 +45,7 @@ const ContactPage = () => {
   return (
     <>
       <form
+        method="POST"
         onSubmit={handleSubmit}
         className="flex flex-col gap-4 mx-auto max-w-[500px] mt-10 border border-gray-200 p-4 rounded-lg"
       >
